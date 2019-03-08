@@ -10,9 +10,12 @@
 
 | Pros        | Cons            |
 | ------------- |:-------------:| 
-| You can make a good and responsive network application, if done right.  | right-aligned | 
-| Allows the use of data streaming, web sockets and fast file uploads | centered      | 
-| It's easy to set up a REST-API with generators like a custom boilerplate project, yeomon or express and mongoDB | are neat      | 
+| You can make a good and responsive network application, if done right.  | Java is good at handling CPU heavy tasks, Node.JS + Express is not. Because Node is, despite its asynchronous event model, by nature single threaded. When you launch a Node process, you are running a single process with a single thread on a single core. So your code will not be executed in parallel, only I/O operations are parallel because they are executed asynchronous. As such, long running CPU tasks will block the whole server and are usually a bad idea | 
+| Allows the use of data streaming, web sockets and fast file uploads | Java integrates well with relational databases like MySQL. Node.JS + Express does not, they have mongoDB but that isn't relational  | 
+| It's easy to set up a REST-API with generators like a custom boilerplate project, yeomon or express and mongoDB | Java as oppposed to Node.JS + Express is a strictly typed language which provides a certain security.  | 
+| It is efficient at handling thousands of concurrent requests (For example - a chat application). | 500 errors in Node.JS and Express will crash the entire application, Java will not   | 
+| It is very simple to implement server middleware, that will be executed between all requests. |          | 
+|          |           | 
 
 
 ## Node.js uses a Single Threaded Non-blocking strategy to handle asynchronous task. Explain strategies to implement a Node.js based server architecture that still could take advantage of a multi-core Server.
