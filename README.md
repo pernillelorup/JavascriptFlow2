@@ -2,7 +2,18 @@
 
 ## Why would you consider a Scripting Language as JavaScript as your Backend Platform?
 
+* It's easy and fast to build and setup a working network application with node.js and the right editor.
+* It's very handy that you can use the same language both in front-end and in the back-end.
+* Not a lot of code is required for an application to run.
+
 ## Explain Pros & Cons in using Node.js + Express to implement your Backend compared to a strategy using, for example, Java/JAX-RS/Tomcat
+
+| Pros        | Cons            |
+| ------------- |:-------------:| 
+| col 3 is      | right-aligned | 
+| col 2 is      | centered      | 
+| zebra stripes | are neat      | 
+
 
 ## Node.js uses a Single Threaded Non-blocking strategy to handle asynchronous task. Explain strategies to implement a Node.js based server architecture that still could take advantage of a multi-core Server.
 
