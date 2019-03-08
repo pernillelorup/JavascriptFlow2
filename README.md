@@ -10,9 +10,9 @@
 
 | Pros        | Cons            |
 | ------------- |:-------------:| 
-| col 3 is      | right-aligned | 
-| col 2 is      | centered      | 
-| zebra stripes | are neat      | 
+| You can make a good and responsive network application, if done right.  | right-aligned | 
+| Allows the use of data streaming, web sockets and fast file uploads | centered      | 
+| It's easy to set up a REST-API with generators like a custom boilerplate project, yeomon or express and mongoDB | are neat      | 
 
 
 ## Node.js uses a Single Threaded Non-blocking strategy to handle asynchronous task. Explain strategies to implement a Node.js based server architecture that still could take advantage of a multi-core Server.
