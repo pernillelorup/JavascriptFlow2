@@ -44,6 +44,28 @@
 [TestExample](https://github.com/pernillelorup/JavascriptFlow2/blob/master/Week2Testing/testdemo1/test/testCalc.js)
 
 ### Explain, using relevant examples, the Express concept; middleware.
+
+Middleware functions are functions that you bind to the express instance and works as a way to configure/add functionality between requests:
+
+* Application level middleware: Mount to all requests or specific endpoints to define routes.
+* Router-level middleware: Router-level middleware works in the same way as application-level middleware, except it is bound to an instance of express.Router().
+* Error-handling middleware: Define error-handling middleware functions in the same way as other middleware functions, except with four arguments instead of three, specifically with the signature (err, req, res, next)):
+* Third-party middleware: Add functionality.
+
+Middleware is executed sequentially. Therefore the order of the middleware is important. If we for example wanted to use the bodyParser to retrieve the body of our request as JSON, we would need to put it before we use it.
+
+```javascript
+//udskift med eget eksempel
+var express = require('express');
+var bodyParser = require('body-parser');
+var router = express.Router();
+
+app.use(bodyParser.json());
+
+router.post('/', function (req, res) {
+    res.send(req.body);
+});
+```
    
 ### Explain, using relevant examples, how to implement sessions and the legal implications of doing this.
 
