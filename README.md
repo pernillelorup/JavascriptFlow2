@@ -41,6 +41,8 @@
 ### Explain, using relevant examples, concepts related to testing a REST-API using Node/JavaScript + relevant packages 
 * For the tests we have used chai and mocha, you first describe the test and then what "it" should do, aswell as a before and after the test.
 
+[TestExample](https://github.com/pernillelorup/JavascriptFlow2/blob/master/Week2Testing/testdemo1/test/testCalc.js)
+
 ### Explain, using relevant examples, the Express concept; middleware.
    
 ### Explain, using relevant examples, how to implement sessions and the legal implications of doing this.
