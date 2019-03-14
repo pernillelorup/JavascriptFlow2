@@ -39,6 +39,7 @@
 ### Demonstrate a system using application logging and       “coloured” debug statements.
 
 ### Explain, using relevant examples, concepts related to testing a REST-API using Node/JavaScript + relevant packages 
+* For the tests we have used chai and mocha, you first describe the test and then what "it" should do, aswell as a before and after the test.
 
 ### Explain, using relevant examples, the Express concept; middleware.
    
