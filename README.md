@@ -39,14 +39,112 @@
 ### Demonstrate a system using application logging and       “coloured” debug statements.
 
 ### Explain, using relevant examples, concepts related to testing a REST-API using Node/JavaScript + relevant packages 
+* For the tests we have used chai and mocha, you first describe the test and then what "it" should do, aswell as a before and after the test.
+
+[TestExample](https://github.com/pernillelorup/JavascriptFlow2/blob/master/Week2Testing/testdemo1/test/testCalc.js)
 
 ### Explain, using relevant examples, the Express concept; middleware.
+
+Middleware functions are functions that you bind to the express instance and works as a way to configure/add functionality between requests:
+
+* Application level middleware: Mount to all requests or specific endpoints to define routes.
+* Router-level middleware: Router-level middleware works in the same way as application-level middleware, except it is bound to an instance of express.Router().
+* Error-handling middleware: Define error-handling middleware functions in the same way as other middleware functions, except with four arguments instead of three, specifically with the signature (err, req, res, next)):
+* Third-party middleware: Add functionality.
+
+Middleware is executed sequentially. Therefore the order of the middleware is important. If we for example wanted to use the bodyParser to retrieve the body of our request as JSON, we would need to put it before we use it.
+
+```javascript
+var express = require('express');
+var bodyParser = require('body-parser');
+var router = express.Router();
+
+app.use(bodyParser.json());
+
+router.post('/', function (req, res) {
+    res.send(req.body);
+});
+```
    
 ### Explain, using relevant examples, how to implement sessions and the legal implications of doing this.
 
+To enable the use of the session we have to require the module express-session. This module was earlier integrated into Express.js but was removed to make the framework more lightweight:
+
+```javascript
+var session = require('express-session');
+```
+
+We enable the session with the following middleware:
+```javascript
+app.use(session({
+    secret: '50ac41d0f8eff5655213',
+    saveUninitialized: false,
+    resave: true
+}));
+```
+To retrieve the session, we can do the following on the req object, and also add properties to it:
+
+```javascript
+ var session = req.session;
+    session.username = "michael";
+```
+A cookie consent has to be implemented on the site, if the cookie is used to track user behaviour.
+
+
+
 ### Compare the express strategy toward (server side) templating with the one you used with Java on second semester.
+Node.JS and Express uses templating engines like Handlebars, Jade and EJS. Java uses templating engines like JSP. Java was never made to be suitable for web applications, and JSP is often seen as a makeshift solution.
+
+MVC:
+
+* Java: Model --> Controller --> Servlet --> JSP
+
+* Express.js: Model --> Controller/Router --> Handlebars/Jade/EJS
+
+Example 1 (Passing variables to a view in Express)
+Node.js + Express.js:
+```javascript
+router.get('/dashboard', isLoggedIn, function (req, res) {
+    res.render('dashboard', {
+        title: 'Dashboard',
+        subtitle: 'Hello dashboard'
+    });
+});
+```
+Java + JSP
+```Java
+protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        RequestDispatcher rd = null;
+        HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(30 * 60);
+
+        session.setAttribute("title", "Dashboard");
+        session.setAttribute("subtitle", "Hello dashboard");
+        rd = request.getRequestDispatcher("dashboard.jsp");
+        rd.forward(request, response);
+
+}
+```
+
+Example 2 (Retrieving a session variable on the front end with Handlebars)
+Node.js + Express.js:
+```javascript
+<h1>{{title}}</h1>
+<h2>{{subtitle}}</h2>
+```
+
+Java + JSP
+```Java
+<h1><%= session.getAttribute("title"); %></h1>
+<h2><%= session.getAttribute("subtitle"); %></h2>
+```
+* Conclusion: use node.js Express for server side templating.
+
 
 ### Demonstrate a simple Server Side Rendering example using a technology of your own choice (pug, EJS, ..).
+
 
 ### Explain, using relevant examples, your strategy for implementing a REST-API with Node/Express and show how you can "test" all the four CRUD operations programmatically using, for example, the Request package.
 
