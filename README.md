@@ -145,12 +145,25 @@ Java + JSP
 
 ### Demonstrate a simple Server Side Rendering example using a technology of your own choice (pug, EJS, ..).
 
+[EJS Server Side Rendering Example](https://github.com/pernillelorup/JavascriptFlow2/tree/master/ejsServerSide)
+use *npm run dev* to run the project.
 
 ### Explain, using relevant examples, your strategy for implementing a REST-API with Node/Express and show how you can "test" all the four CRUD operations programmatically using, for example, the Request package.
 
+
+
 ### Explain, using relevant examples, about testing JavaScript code, relevant packages (Mocha etc.) and how to test asynchronous code.
+
+Mocha: Mocha is a test framework running on Node.js and can be used to test synchronous and asynchronous functions. Mocha tests run serially, allowing for flexible and accurate reporting, while mapping uncaught exceptions to the correct test cases. -> "describe" + "it".
+
+Chai: Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework. -> "should" + "expect" + "assert". request: Request is designed to be the simplest way possible to make http calls. It supports HTTPS and follows redirects by default.
+
+In this [calculator](https://github.com/pernillelorup/JavascriptFlow2/blob/master/Week2Testing/testdemo1/calc.js) example, we have 4 simple functions and a REST API. 
+We test the calculator in this [test class](https://github.com/pernillelorup/JavascriptFlow2/blob/master/Week2Testing/testdemo1/test/testCalc.js)
       
 ### Explain, using relevant examples, different ways to mock out databases, HTTP-request etc.
+
+
 
 ### Explain, preferably using an example, how you have deployed your node/Express applications, and which of the Express Production best practices you have followed.
 
