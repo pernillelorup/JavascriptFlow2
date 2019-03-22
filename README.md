@@ -23,20 +23,136 @@
 
 ## Node.js uses a Single Threaded Non-blocking strategy to handle asynchronous task. Explain strategies to implement a Node.js based server architecture that still could take advantage of a multi-core Server.
 
+#### Solution 1 (built it)
+
+* Node.js does not come with mutlithreading out of the box, since it's single threaded, but it is possible to build and program it yourself. We just haven't done that in class.
+
+#### Solution 2 (Multiple servers)
+
+* For scaling throughout on a webservice, you should run multiple Node.js servers on one or more machine/es, one per core and split request traffic between them. This provides excellent CPU-affinity and will scale throughout nearly linearly with core count. You could also put a load balancer in front of it. The load balancer will balance the load of incoming requests, thus achieving a multicore solution.
 
 #### Explain briefly how to deploy a Node/Express application including how to solve the following deployment problems:
 
 ##### Ensure that you Node-process restarts after a (potential) exception that closed the application
 
+To ensure my application will work I would use nodemon at least for development, nodemon is a utility that restarts the server or the application if it crashes or after something.
+
+Another strategy is to use a process manager. When using a process manager, the process manager manages the starting of the application. You no longer start the application yourself, but instead instruct a process manager to do it for you. These process managers can be configured to automatically restart the application on crashes.
+
+[Project managers - Express](https://expressjs.com/en/advanced/pm.html)
+Useful process managers:
+
+* Restart the app automatically if it crashes.
+* Gain insights into runtime performance and resource consumption.
+* Modify settings dynamically to improve performance.
+* Control clustering.
+
+Some popular process managers are:
+
+* [forever](https://github.com/foreverjs/forever)
+* [pm2](https://pm2.io/doc/en/runtime/overview/?utm_source=pm2&utm_medium=website&utm_campaign=rebranding)
+* [StrongLoop Process Manager](http://strong-pm.io/)
+
+These can all be used. 
+
 ##### Ensure that you Node-process restarts after a server (Ubuntu) restart
       
 ##### Ensure that you can take advantage of a multi-core system
 
+* Use the web api's SetTimeout or similar to delegate tasks to the browsers multi-threading capabilities. Or one could use the cluster module for node, which is probably the best solution.
+
 ##### Ensure that you can run “many” node-applications on a single droplet on the same port (80)
+
+* You could configure a load balancer for this purpose. Nginx could also be used as a reverse proxy.
 
 ### Explain the difference between “Debug outputs” and application logging. What’s wrong with console.log(..) statements in our backend-code.
 
-### Demonstrate a system using application logging and       “coloured” debug statements.
+The problem with using console.log is that the output cannot easily be disabled when deployed to a production environment. Since console.log is a blocking call, the impact on the performance of the application will suffer.
+
+The debug package exposes a function that can be used to print debugging messages.
+
+```javascript
+const a = require('debug')('a') // Creates a debug function with the name a
+const b = require('debug')('b') // Creates a debug function with the name b
+const c = require('debug')('c') // Creates a debug function with the name c
+a('Printed by a')
+b('Printed by b')
+c('Printed by c')
+```
+These messages can easily be enabled or disabled based on the DEBUG environment variable.
+
+* when DEBUG=*, all debug statements are printed.
+* when DEBUG=a, only the a debug statements are printed.
+* when DEBUG=*,-a, all debug statements except a are printed.
+* when DEBUG=a,b, only a and b debug statements are printed.
+
+Names can also be enabled based on a regex like syntax.
+
+```javascript
+const a = require('debug')('name:a')
+const b = require('debug')('name:b')
+```
+
+* when DEBUG=name:a, a debug statements are printed.
+* when DEBUG=name:*, all debug statements starting with name are printed.
+
+
+### Demonstrate a system using application logging and “coloured” debug statements.
+
+Logging using Winston:
+
+```javascript
+const app = express()
+const winston = require('winston')
+const consoleTransport = new winston.transports.Console()
+const myWinstonOptions = {
+    transports: [consoleTransport]
+}
+const logger = new winston.createLogger(myWinstonOptions)
+function logRequest(req, res, next) {
+    logger.info(req.url)
+    next()
+}
+app.use(logRequest)
+function logError(err, req, res, next) {
+    logger.error(err)
+    next()
+}
+app.use(logError)
+```
+#### Colored debug statements:
+
+The debug module has a great namespace feature that allows you to enable or disable debug functions in groups. It is very simple–you separate namespaces by colons, like this:
+
+```javascript
+debug('app:meta')('config loaded')
+debug('app:database')('querying db...');
+debug('app:database')('got results!', results);
+```
+Enable debug functions in Node by passing the process name via the DEBUG environment variable. The following would enable the database debug function but not meta:
+
+```javascript
+$ DEBUG='app:database' node app.js
+```
+
+To enable both, list both names, separated by commas:
+
+```javascript
+$ DEBUG='app:database,app:meta' node app.js
+```
+
+Alternately, use the asterisk wildcard character (*) to enable any debugger in that namespace. For example, the following enables any debug function whose name starts with “app:":
+
+```javascript
+$ DEBUG='app:*' node app.js
+```
+
+You can get as granular as you want with debug namespaces…
+
+```javascript
+debug('myapp:thirdparty:identica:auth')('success!');
+debug('myapp:thirdparty:twitter:auth')('success!');
+```
 
 ### Explain, using relevant examples, concepts related to testing a REST-API using Node/JavaScript + relevant packages 
 * For the tests we have used chai and mocha, you first describe the test and then what "it" should do, aswell as a before and after the test.
