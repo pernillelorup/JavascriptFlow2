@@ -56,6 +56,8 @@ Some popular process managers are:
 These can all be used. 
 
 ##### Ensure that you Node-process restarts after a server (Ubuntu) restart
+
+Look above
       
 ##### Ensure that you can take advantage of a multi-core system
 
@@ -64,6 +66,8 @@ These can all be used.
 ##### Ensure that you can run “many” node-applications on a single droplet on the same port (80)
 
 * You could configure a load balancer for this purpose. Nginx could also be used as a reverse proxy.
+
+* A reverse proxy is a server that sits between internal applications and external clients, forwarding client requests to the appropriate server. ... Using NGINX as a reverse proxy enables you to add these features to any application
 
 ### Explain the difference between “Debug outputs” and application logging. What’s wrong with console.log(..) statements in our backend-code.
 
@@ -189,6 +193,20 @@ app.use(bodyParser.json());
 router.post('/', function (req, res) {
     res.send(req.body);
 });
+```
+
+> mini-project example
+```js
+app.use('/', indexRouter);
+app.use('/api', apiRouter);
+app.use('/geoapi', geoapiRouter);
+app.use(
+	'/graphql',
+	graphqlHTTP({
+		schema,
+		graphiql: true
+	})
+);
 ```
    
 ### Explain, using relevant examples, how to implement sessions and the legal implications of doing this.
