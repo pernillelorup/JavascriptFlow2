@@ -97,6 +97,14 @@ const b = require('debug')('name:b')
 * when DEBUG=name:*, all debug statements starting with name are printed.
 
 
+```
+var logger = require('morgan');
+
+app.use(logger('dev'));
+
+```
+
+
 ### Demonstrate a system using application logging and “coloured” debug statements.
 
 Logging using Winston:
