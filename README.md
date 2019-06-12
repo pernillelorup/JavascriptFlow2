@@ -96,7 +96,7 @@ const b = require('debug')('name:b')
 * when DEBUG=name:a, a debug statements are printed.
 * when DEBUG=name:*, all debug statements starting with name are printed.
 
-
+Example from mini-project in app.js
 ```
 var logger = require('morgan');
 
