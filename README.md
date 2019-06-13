@@ -254,6 +254,7 @@ router.get('/dashboard', isLoggedIn, function (req, res) {
     });
 });
 ```
+
 Java + JSP
 ```Java
 protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -286,16 +287,37 @@ Java + JSP
 * Conclusion: use node.js Express for server side templating.
 
 
+Both JSP and EJS uses tags to embed Java and JavaScript respectively in HTML code
+
+JSP tags:
+
+<%! Variable declaration or method definition %>
+<%= Java valid expression %>
+<% Pure Java code %>
+EJS tags:
+
+<% 'Scriptlet' tag, for control-flow, no output
+<%_ ‘Whitespace Slurping’ Scriptlet tag, strips all whitespace before it
+<%= Outputs the value into the template (HTML escaped)
+<%- Outputs the unescaped value into the template
+<%# Comment tag, no execution, no output
+<%% Outputs a literal '<%'
+%> Plain ending tag
+-%> Trim-mode ('newline slurp') tag, trims following newline
+_%> ‘Whitespace Slurping’ ending tag, removes all whitespace after it
+
 ### Demonstrate a simple Server Side Rendering example using a technology of your own choice (pug, EJS, ..).
 
 [EJS Server Side Rendering Example](https://github.com/pernillelorup/JavascriptFlow2/tree/master/ejsServerSide)
 
-Use *npm run dev* to run the project.
+> Use *npm run dev* to run the project.
+
+* EJS is a simple templating language that lets you generate HTML markup with plain JavaScript. 
 
 ### Explain, using relevant examples, your strategy for implementing a REST-API with Node/Express and show how you can "test" all the four CRUD operations programmatically using, for example, the Request package.
 
 [Mongoose CRUD example](https://vegibit.com/mongoose-crud-tutorial/)
-[Mini-Project](https://github.com/pernillelorup/mini-project-fullstackjs2019)
+[Mini-Project](https://github.com/grem848/mini-project-fullstackjs2019)
 
 ### Explain, using relevant examples, about testing JavaScript code, relevant packages (Mocha etc.) and how to test asynchronous code.
 
@@ -306,10 +328,28 @@ Chai: Chai is a BDD / TDD assertion library for node and the browser that can be
 In this [calculator](https://github.com/pernillelorup/JavascriptFlow2/blob/master/Week2Testing/testdemo1/calc.js) example, we have 4 simple functions and a REST API. 
 
 We test the calculator in this [test class](https://github.com/pernillelorup/JavascriptFlow2/blob/master/Week2Testing/testdemo1/test/testCalc.js)
+
+Testing asyncronous code in [Mini-Project](https://github.com/grem848/mini-project-fullstackjs2019)
       
 ### Explain, using relevant examples, different ways to mock out databases, HTTP-request etc.
 
-We can use nock to mock a website
+* Mock objects are simulated objects that mimic the behavior of real objects in controlled ways.
+* Mock objects have the same interface as the real objects they mimic, allowing a client object to remain unaware of whether it is using a real object or a mock object.
+* Many available mock object frameworks allow the programmers to create mocks Automatically from existing code/interfaces
+
+* Nock is an HTTP mocking and expectations library for Node.js
+* Nock can be used to test modules that perform HTTP requests in isolation (that is without performing a real network operation)
+* We can use nock to mock a website
+
+```js
+var nock = require('nock');
+var n = nock('http://myapp.iriscouch.com')
+                .get('/users/1')
+                .reply(200, {id: '123ABC',username: 'kurt', email: 'kurt@gmail.com'});
+```
+
+[Slides with swapi mocking](http://slides.mydemos.dk/test1/unitTestingBackend.html#23)
+
 
 ```javascript
 const nock = require('nock');
@@ -356,6 +396,24 @@ describe("loadWiki()", function() {
 * Organizations are now turning to scale-out architectures using open source software, commodity servers and cloud computing instead of large monolithic servers and storage infrastructure.
 
 * Relational databases were not designed to cope with the scale and agility challenges that face modern applications, nor were they built to take advantage of the commodity storage and processing power available today.
+
+__s__
+
+* A NoSQL originally referring to non SQL or non relational is a database that provides a mechanism for storage and retrieval of data
+* NoSQL databases are used in real-time web applications and big data and their use are increasing over time.
+* NoSQL systems are also sometimes called Not only SQL to emphasize the fact that they may support SQL-like query languages.
+* A NoSQL database includes simplicity of design, simpler horizontal scaling to clusters of machines and finer control over availability
+* The data structures used by NoSQL databases are different from those used by default in relational databases which makes some operations faster in NoSQL.
+
+
+##### When should NoSQL be used:
+
+* When huge amount of data need to be stored and retrieved .
+* The relationship between the data you store is not that important
+* The data changing over time and is not structured.
+* Support of Constraints and Joins is not required at database level
+* The data is growing continuously and you need to scale the database regular to handle the data.
+
 
 ### Explain Pros & Cons in using a NoSQL database like MongoDB as your data store, compared to a traditional Relational SQL Database like MySQL.
 
