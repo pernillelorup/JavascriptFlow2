@@ -379,6 +379,14 @@ describe("loadWiki()", function() {
 * https://medium.freecodecamp.org/how-to-write-a-production-ready-node-and-express-app-f214f0b17d8c
 * https://www.codementor.io/mattgoldspink/nodejs-best-practices-du1086jja
 
+Things to do in your code Here are some things you can do in your code to improve your application’s performance:
+
+* Use gzip compression
+* Don’t use synchronous functions
+* Do logging correctly
+* Handle exceptions properly
+* Use DEBUG
+
 ## NoSQL, MongoDB and Mongoose
 
 ### Explain, generally, what is meant by a NoSQL database.
@@ -462,7 +470,45 @@ __s__
 #### These two topics will be introduced in period-3
 
 ##### Explain about indexes in MongoDB, how to create them, and demonstrate how you have used them.
+
+Indexes support the efficient resolution of queries. Without indexes, MongoDB must scan every document of a collection to select those documents that match the query statement. This scan is highly inefficient and require MongoDB to process a large volume of data.
+
+```js
+const user_id = await User.findOne({ userName: username }).select({ _id: 1 });
+```
+
+Here key is the name of the field on which you want to create index and 1 is for ascending order. To create index in descending order you need to use -1.
+
 ##### Explain, using your own code examples, how you have used some of MongoDB's "special" indexes like TTL and 2dsphere
+
+TTL
+TTL indexes are special single-field indexes that MongoDB can use to automatically remove documents from a collection after a certain amount of time or at a specific clock time. Data expiration is useful for certain types of information like machine generated event data, logs, and session information that only need to persist in a database for a finite amount of time.
+
+2dsphere
+A 2dsphere index supports queries that calculate geometries on an earth-like sphere. 2dsphere index supports all MongoDB geospatial queries: queries for inclusion, intersection and proximity.
+
+Longitude, latitude.
+```js
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+const SECONDS = 1;
+var EXPIRES = 60 * 60 * SECONDS; // change back to 1 min instead of 1 hour
+var PositionSchema = new Schema({
+	//Make sure that next line reflects your User-model
+	user: { type: Schema.ObjectId, ref: 'User', required: true },
+	created: { type: Date, expires: EXPIRES, default: Date.now },
+	loc: {
+		type: { type: String, enum: ['Point'], default: 'Point', required: true },
+		coordinates: {
+			type: [Number],
+			required: true
+		}
+	}
+});
+PositionSchema.index({ loc: '2dsphere' }, { background: true });
+
+module.exports = mongoose.model('Position', PositionSchema);
+```
 
 ### Demonstrate, using a REST-API you have designed, how to perform all CRUD operations on a MongoDB
 
